@@ -4,13 +4,16 @@ const bookSchema = new mongoose.Schema({
   title: {
     type: String,
     unique: true,
-    required: [true, "Book must have a title!"],
+    required: [true, "Title is required!"],
     trim: true
   },
   description: {
     type: String,
-    required: [true, "Book must have a description!"],
+    required: [true, "Description is required!"],
     trim: true
+  },
+  publicationYear: {
+    type: Number,
   },
   author: Object,
   genres: Array

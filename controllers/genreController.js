@@ -1,11 +1,11 @@
-const User = require("../models/user")
+const Genre = require("../models/genre")
 
-exports.createUser=async(req,res,next)=>{
+exports.createGenre=async(req,res,next)=>{
     try{
-        const newUser = await User.create({...req.body})
+        const newGenre = await Genre.create({...req.body})
         res.json({
             "status":"success",
-            "data":newUser
+            "data":newGenre
         })
     } catch(err){
         res.json({
@@ -15,12 +15,12 @@ exports.createUser=async(req,res,next)=>{
     }
 }
 
-exports.readUser = async(req,res,next)=>{
+exports.readGenre = async(req,res,next)=>{
     try{
-        const allUsers = await User.find({})
+        const allGenres = await Genre.find({})
         res.json({
             status:"success",
-            data: allUsers
+            data: allGenres
         })
     } catch(err) {
         res.json({
@@ -30,18 +30,18 @@ exports.readUser = async(req,res,next)=>{
     }
 }
 
-exports.updateUser = async(req,res,next)=>{
+exports.updateGenre = async(req,res,next)=>{
     try{
-        const user = await User.findById(req.params.id)
-        if(!user){
-            throw new Error("No such user exists.")
+        const genre = await Genre.findById(req.params.id)
+        if(!genre){
+            throw new Error("No such genre exists.")
         }
         const fields = Object.keys(req.body);
-        fields.map(field => user[field] = req.body[field]);
-        await user.save()
+        fields.map(field => genre[field] = req.body[field]);
+        await genre.save()
         res.json({
             status:"success",
-            data:user
+            data:genre
         })
         next();
     } catch(err) {
