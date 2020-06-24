@@ -32,7 +32,7 @@ exports.readUser = async(req,res,next)=>{
 
 exports.updateUser = async(req,res,next)=>{
     try{
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.userId)
         if(!user){
             throw new Error("No such user exists.")
         }
@@ -44,6 +44,25 @@ exports.updateUser = async(req,res,next)=>{
             data:user
         })
         next();
+    } catch(err) {
+        res.json({
+            status:"fail",
+            message:err.message
+        })
+    }
+}
+
+exports.deleteUser = async(req,res,next)=>{
+    try {
+        const user = await User.findByIdAndDelete(req.params.userId) 
+        if(!user) {
+            throw new Error("No such user exists.")
+        }
+        res.status(204).json({
+            status: "successfully deleted user",
+            data: null
+        })
+
     } catch(err) {
         res.json({
             status:"fail",

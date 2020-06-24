@@ -27,7 +27,7 @@ exports.readBook = async (req, res, next) => {
 
 exports.updateBook = async (req, res, next) => {
   try {
-    const book = await Book.findById(req.params.id)
+    const book = await Book.findById(req.params.bookId)
     if (!book) {
       throw new Error("No such book exists.")
     }
@@ -44,5 +44,24 @@ exports.updateBook = async (req, res, next) => {
       status: "fail",
       message: err.message
     })
+  }
+}
+
+exports.deleteBook = async(req,res,next)=>{
+  try {
+      const book = await Book.findByIdAndDelete(req.params.userId) 
+      if(!book) {
+          throw new Error("No such book exists.")
+      }
+      res.status(204).json({
+          status: "successfully deleted book",
+          data: null
+      })
+
+  } catch(err) {
+      res.json({
+          status:"fail",
+          message:err.message
+      })
   }
 }

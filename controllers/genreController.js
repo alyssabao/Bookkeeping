@@ -32,7 +32,7 @@ exports.readGenre = async(req,res,next)=>{
 
 exports.updateGenre = async(req,res,next)=>{
     try{
-        const genre = await Genre.findById(req.params.id)
+        const genre = await Genre.findById(req.params.genreId)
         if(!genre){
             throw new Error("No such genre exists.")
         }
@@ -44,6 +44,25 @@ exports.updateGenre = async(req,res,next)=>{
             data:genre
         })
         next();
+    } catch(err) {
+        res.json({
+            status:"fail",
+            message:err.message
+        })
+    }
+}
+
+exports.deleteGenre = async(req,res,next)=>{
+    try {
+        const genre = await Genre.findByIdAndDelete(req.params.userId) 
+        if(!genre) {
+            throw new Error("No such genre exists.")
+        }
+        res.status(204).json({
+            status: "successfully deleted genre",
+            data: null
+        })
+
     } catch(err) {
         res.json({
             status:"fail",

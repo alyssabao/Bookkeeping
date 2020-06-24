@@ -15,9 +15,9 @@ const bodyParser = require('body-parser')
 // ... 
 const app = express();
 const router = express.Router();
-const {createUser,readUser,updateUser} = require("./controllers/userController")
-const {createBook,readBook,updateBook} = require("./controllers/bookController")
-const {createGenre,readGenre,updateGenre} = require("./controllers/genreController")
+const {createUser,readUser,updateUser,deleteUser} = require("./controllers/userController")
+const {createBook,readBook,updateBook,deleteBook} = require("./controllers/bookController")
+const {createGenre,readGenre,updateGenre,deleteGenre} = require("./controllers/genreController")
   
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,8 +32,9 @@ router
 .get(readUser)
 
 router
-.route("/user/:id")
+.route("/user/userId")
 .put(updateUser)
+.delete(deleteUser)
 
 router
 .route("/book")
@@ -41,8 +42,9 @@ router
 .get(readBook)
 
 router
-.route("/book/:id")
+.route("/book/bookId")
 .put(updateBook)
+.delete(deleteBook)
 
 router
 .route("/genre")
@@ -50,8 +52,9 @@ router
 .get(readGenre)
 
 router
-.route("/genre/:id")
+.route("/genre/:genreId")
 .put(updateGenre)
+.delete(deleteGenre)
 
 app.listen(process.env.PORT, () =>
 console.log("server running on " + process.env.PORT)
